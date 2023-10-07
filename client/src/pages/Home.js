@@ -28,27 +28,36 @@ const Home = () => {
   };
   return (
     <div className="row">
-      {users?.map((user) => (
-        <div className="col-md-3 card me-3 mt-2 p-0" key={user._id}>
-          <img src={user.avatar} alt="" width={"100%"} height={200} />
-          <div className="p-2">
-            <h3>{user.name}</h3>
-            <div className="d-flex justify-content-between align-items-center">
-              <Link to={`/edit/${user._id}`} style={{ textDecoration: "none" }}>
-                Edit
-              </Link>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={() => handleDelete(user._id)}
-              >
-                X
-              </button>
-            </div>
-          </div>
-        </div>
-      ))}
+      {users?.map((user) => {
+       var type=user.avatar.split(".");
+       const res=type[type.length-1]
+        type[type.length-1]=res==="mp4"?"jpg":res
+        const source=type.join(".")
+        
+          return (
+            
+            <div className="col-md-3 card text-white bg-dark  me-4 mt-2 p-0 card-columns"  key={user._id}>
+              <img src={source} alt="" width={"100%"} height={350} />
+              <div className="p-2">
+                <h3>{user.name}</h3>
+                <div className="d-flex justify-content-between align-items-center">
+                  <h5>{res==="mp4"?"Video":"Image"}</h5>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(user._id)}
+                  >X
+                  </button>
+                </div>
+                <a href={user.avatar} className="btn btn-light" download>Open</a>
+              </div>
+              </div>
+              
+          )
+      }
+      )}
     </div>
   );
 };
 
 export default Home;
+

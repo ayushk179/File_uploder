@@ -46,7 +46,7 @@ const AddUser = () => {
         <input
           className="form-control"
           type="file"
-          accept="image/*"
+          accept="image/*,video/*"
           name="image"
           onChange={handleChange("image")}
         />
