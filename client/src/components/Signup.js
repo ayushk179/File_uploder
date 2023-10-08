@@ -12,8 +12,6 @@ export default function SignUp() {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
       e.preventDefault();
-
-      console.log(fname, lname, email, password);
       fetch("https://uplodify.onrender.com/register", {
         method: "POST",
         crossDomain: true,
