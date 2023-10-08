@@ -26,7 +26,7 @@ const AddUser = () => {
         formData.append("image", data.image);
          formData.append("name", data.name);
 
-      const res = await fetch(`http://localhost:5000/user`, {
+      const res = await fetch(`https://uplodify.onrender.com/user`, {
         method: "POST",
         body: formData,
       });

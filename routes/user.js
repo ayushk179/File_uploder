@@ -13,7 +13,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     const result = await cloudinary.uploader.upload(req.file.path,{resource_type:"auto"});
     // Create new user
     const short_id=  UrlShortener.generateShortUrl();
-    const base_url="http://localhost:5000/user/";
+    const base_url="https://uplodify.onrender.com/user/";
     const short=base_url.concat(short_id)
     let user = new User({
       name: req.body.name,
