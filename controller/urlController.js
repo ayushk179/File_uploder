@@ -5,7 +5,7 @@ class UrlController {
 
     static async redirectToOriginalUrl(req, res) {
         try {
-            const srl ="https://uplodify.onrender.com/user/"+ req.originalUrl;
+            const srl ="https://uplodify.onrender.com"+ req.originalUrl;
             console.log(srl);
             const url = await user.findOne({ shortUrl: srl });
             
