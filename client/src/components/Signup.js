@@ -1,6 +1,8 @@
 import React, { Component, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Nav from './Nav';
+import { Link } from "react-router-dom";
+
 export default function SignUp() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -104,7 +106,7 @@ export default function SignUp() {
                       <br></br>
                       <label>Already registered </label>
                       <br></br>
-                      <a href="/sign-in" class="btn btn-dark" >Sign In</a>
+                      <Link to="/sign-in" class="btn btn-dark" >Sign In</Link>
                     </div>
                   
                   </form>

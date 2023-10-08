@@ -13,10 +13,10 @@ function App() {
        <Routes>
           <Route  path="/sign-in" element={[<Login/>]} />
           <Route  path="/sign-up" element={[<Signup/>]} />
-          <Route path="/" element={<Privateroute />}>
+           <Route path="/" element={<Privateroute />}>
                  <Route path="/" element={[<Home/>]}/>
                  <Route path="/add" element={[<AddUser/>]} />
-          </Route>
+           </Route>
           <Route path="*" element={<PageNotFound />} />
           </Routes>
     </BrowserRouter>

@@ -1,6 +1,7 @@
 import React, { Component ,useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Nav from './Nav';
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,7 +10,6 @@ const Login = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(email, password);
     fetch("https://uplodify.onrender.com/login-user", {
       method: "POST",
       crossDomain: true,
@@ -25,7 +25,6 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data, "userRegister");
         if (data.status == "ok") {
           alert("login successful");
           window.localStorage.setItem("token", data.data);
@@ -89,10 +88,8 @@ const Login = () => {
           <br></br>
           <label>New User </label>
           <br></br>
-          <a href="/sign-up" class="btn btn-dark" >Sign Up</a>
-          
+          <Link to="/sign-up" class="btn btn-dark" >Sign In</Link>
           </div>
-          
         </form>
       </div>
     </div>
