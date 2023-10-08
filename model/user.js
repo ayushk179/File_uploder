@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -9,6 +10,12 @@ const userSchema = new mongoose.Schema({
   cloudinary_id: {
     type: String,
   },
+  shortUrl:{
+    type: String,
+  },
+  userId:{
+    type : String
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);

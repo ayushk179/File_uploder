@@ -2,20 +2,26 @@ const router = require("express").Router();
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
 const User = require("../model/user");
+const user = require("../model/user");
+const UrlShortener = require('../utils/urlShortener');
+const urlController = require('../controller/urlController');
+
 
 router.post("/", upload.single("image"), async (req, res) => {
   try {
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path,{resource_type:"auto"});
-
     // Create new user
-    
+    const short_id=  UrlShortener.generateShortUrl();
+    const base_url="http://localhost:5000/user/";
+    const short=base_url.concat(short_id)
     let user = new User({
       name: req.body.name,
       avatar: result.secure_url,
       cloudinary_id: result.public_id,
-
+      shortUrl : short
     });
+     
     // Save user
     await user.save();
     res.json(user);
@@ -36,47 +42,25 @@ router.get("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     // Find user by id
-    let user = await User.findById(req.params.id);
-    // Delete image from cloudinary
-    await cloudinary.uploader.destroy(user.cloudinary_id);
-    // Delete user from db
-    await user.remove();
-    res.json(user);
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-router.put("/:id", upload.single("image"), async (req, res) => {
-  try {
-    let user = await User.findById(req.params.id);
-    // Delete image from cloudinary
-    await cloudinary.uploader.destroy(user.cloudinary_id);
-    // Upload image to cloudinary
-    let result;
-    if (req.file) {
-      result = await cloudinary.uploader.upload(req.file.path);
+    const id=req.params.id;
+    let user = await User.findById(id);
+   
+    if(user){
+       // Delete image from cloudinary
+     await cloudinary.uploader.destroy(user.cloudinary_id);
+     // Delete user from db
+      await user.remove();
+      res.json(user);
     }
-    const data = {
-      name: req.body.name || user.name,
-      avatar: result?.secure_url || user.avatar,
-      cloudinary_id: result?.public_id || user.cloudinary_id,
-    };
-    user = await User.findByIdAndUpdate(req.params.id, data, { new: true });
-    res.json(user);
+    else{
+      return res.status(404).send('No document found');
+    }
   } catch (err) {
-    console.log(err);
+    alert(err);
   }
 });
 
-router.get("/:id", async (req, res) => {
-  try {
-    // Find user by id
-    let user = await User.findById(req.params.id);
-    res.json(user);
-  } catch (err) {
-    console.log(err);
-  }
-});
+router.get("/:id", urlController.redirectToOriginalUrl);
+
 
 module.exports = router;

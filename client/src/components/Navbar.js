@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const logOut = () => {
+    window.localStorage.clear();
+    window.location.href = "./sign-in";
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
       <div className="container">
@@ -10,9 +14,12 @@ const Navbar = () => {
         <div>
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/add">
+                <Link className="nav-link" to="/add">
                 Add Files
               </Link>
+              <button onClick={logOut} className="btn btn-dark">
+            Log Out
+          </button>
             </li>
           </ul>
         </div>

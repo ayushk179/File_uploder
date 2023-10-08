@@ -1,20 +1,24 @@
-import { Switch, BrowserRouter, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import AddUser from "./pages/AddUser";
-import EditUser from "./pages/EditUser";
-
+import {BrowserRouter,Route, Routes} from 'react-router-dom';
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Privateroute from "./components/Privateroute";
+import PageNotFound from "./components/PageNotFound";
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <div className="container">
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/add" component={AddUser} />
-          <Route path="/edit/:id" component={EditUser} />
-        </Switch>
-      </div>
+       <Routes>
+          <Route  path="/sign-in" element={[<Login/>]} />
+          <Route  path="/sign-up" element={[<Signup/>]} />
+          <Route path="/" element={<Privateroute />}>
+                 <Route path="/" element={[<Home/>]}/>
+                 <Route path="/add" element={[<AddUser/>]} />
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+          </Routes>
     </BrowserRouter>
   );
 }

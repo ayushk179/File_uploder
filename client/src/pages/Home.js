@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import { saveAs } from "file-saver";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const Home = () => {
   const [users, setUsers] = useState();
@@ -26,7 +29,21 @@ const Home = () => {
       console.log(error);
     }
   };
+
+  const handleDownload=(data)=>{
+    try{
+      saveAs(data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  
   return (
+    <>
+    <Navbar/>
+    <div className="container"> 
     <div className="row">
       {users?.map((user) => {
        var type=user.avatar.split(".");
@@ -34,8 +51,9 @@ const Home = () => {
         type[type.length-1]=res==="mp4"?"jpg":res
         const source=type.join(".")
         
+       
           return (
-            
+          
             <div className="col-md-3 card text-white bg-dark  me-4 mt-2 p-0 card-columns"  key={user._id}>
               <img src={source} alt="" width={"100%"} height={350} />
               <div className="p-2">
@@ -45,10 +63,16 @@ const Home = () => {
                   <button
                     className="btn btn-danger btn-sm"
                     onClick={() => handleDelete(user._id)}
-                  >X
+                  >Delete
                   </button>
                 </div>
-                <a href={user.avatar} className="btn btn-light" download>Open</a>
+                <br></br>
+                <div className="d-flex justify-content-between align-items-center">
+                <h5><a  className="btn btn-light" onClick={() => handleDownload(user.avatar)}>Download</a></h5>
+                <CopyToClipboard text={user.shortUrl} className="btn btn-light">
+                    <button   onClick={() => alert("The Short_URL has been copied")}>Short_URL</button>
+                 </CopyToClipboard>
+                </div>
               </div>
               </div>
               
@@ -56,6 +80,8 @@ const Home = () => {
       }
       )}
     </div>
+    </div>
+    </>
   );
 };
 

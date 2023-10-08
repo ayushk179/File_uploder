@@ -22,6 +22,8 @@ app.use(express.json());
 app.use(cors());
 
 // Route
+app.use("/", require("./routes/Auth"));
 app.use("/user", require("./routes/user"));
 
+// server
 app.listen(5000, () => console.log("Server is running"));
