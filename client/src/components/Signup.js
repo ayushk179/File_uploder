@@ -29,7 +29,7 @@ export default function SignUp() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data, "userRegister");
+          
           if (data.status == "ok") {
             alert("Registration Successful");
              window.localStorage.setItem("token", data.data);
